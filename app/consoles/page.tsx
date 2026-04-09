@@ -1,20 +1,24 @@
 import { stackServerApp } from "@/stack/server";
-import { redirect } from "next/navigation"
+import { redirect } from "next/navigation";
 import SideBar from "@/components/SideBar";
-import ConsolesInfo from "@/components/ConsolesInfo"
+import ConsolesInfo from "@/components/ConsolesInfo";
 
-// games/page.tsx
-export default async function ConsolesPage({ searchParams } : { searchParams: Promise<{q?: string}> }) {
+export default async function ConsolesPage({
+    searchParams,
+}: {
+    searchParams?: {
+        q?: string;
+        page?: string;
+    };
+}) {
     const user = await stackServerApp.getUser();
-    if(!user) {
-        redirect('/');
+    if (!user) {
+        redirect("/");
     }
 
     return (
-        <div>
-            <SideBar currentPath={'/consoles'}>
-                <ConsolesInfo searchParams={searchParams} />
-            </SideBar>
-        </div>
+        <SideBar currentPath="/consoles">
+            <ConsolesInfo searchParams={searchParams} />
+        </SideBar>
     );
 }
