@@ -1,0 +1,33 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Console {
+  id           Int      @id @default(autoincrement())
+  name         String   @unique
+  image        String   @default("no-image.png")
+  releasedate  DateTime
+  manufacturer String
+  description  String   @db.Text
+  games        Game[]
+}
+
+model Game {
+  id           Int      @id @default(autoincrement())
+  title        String   @unique
+  cover        String   @default("no-cover.png")
+  developer    String
+  releasedate  DateTime
+  price        Float
+  genre        String
+  description  String   @db.Text
+
+  // Relations
+  console_id Int
+  console    Console @relation(fields: [console_id], references: [id])
+}
