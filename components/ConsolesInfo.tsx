@@ -1,8 +1,7 @@
-import { PrismaClient } from '../src/generated/prisma'
+import { PrismaClient, Prisma } from '../src/generated/prisma'
 import { PrismaNeon } from '@prisma/adapter-neon'
 import SearchInput from '@/components/SearchInput'
 import Pagination from '@/components/Pagination'
-
 import CreateConsoleModal from "@/components/modals/CreateConsoleModal"
 import EditConsoleButton from "@/components/modals/EditConsoleButton"
 import DeleteConsoleButton from "@/components/modals/DeleteConsoleButton"
@@ -29,15 +28,30 @@ export default async function ConsolesInfo({
     const search = q
     const currentPage = Number(page) || 1
 
-    const where = search
+    const where: Prisma.ConsoleWhereInput = search
         ? {
             OR: [
-                { name: { contains: search, mode: 'insensitive' } },
-                { manufacturer: { contains: search, mode: 'insensitive' } },
-                { description: { contains: search, mode: 'insensitive' } },
+                {
+                    name: {
+                        contains: search,
+                        mode: "insensitive",
+                    },
+                },
+                {
+                    manufacturer: {
+                        contains: search,
+                        mode: "insensitive",
+                    },
+                },
+                {
+                    description: {
+                        contains: search,
+                        mode: "insensitive",
+                    },
+                },
             ],
         }
-        : {}
+        : {};
 
     const [consoles, total] = await Promise.all([
         prisma.console.findMany({
