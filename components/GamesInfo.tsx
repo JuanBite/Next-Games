@@ -1,4 +1,4 @@
-import { PrismaClient } from '../src/generated/prisma'
+import { PrismaClient, Prisma } from '../src/generated/prisma'
 import { PrismaNeon } from '@prisma/adapter-neon'
 import SearchInput from '@/components/SearchInput'
 import Pagination from '@/components/Pagination'
@@ -37,17 +37,45 @@ export default async function GamesInfo({
             ? { price: { equals: Number(search) } }
             : {}
 
-    const where = search
+    const where: Prisma.GameWhereInput = search
         ? {
             OR: [
-                { title: { contains: search, mode: 'insensitive' } },
-                { genre: { contains: search, mode: 'insensitive' } },
-                { developer: { contains: search, mode: 'insensitive' } },
-                { console: { name: { contains: search, mode: 'insensitive' } } },
-                ...(priceFilter.price ? [priceFilter] : []),
+                {
+                    price: {
+                        equals: Number(search),
+                    },
+                },
+                {
+                    title: {
+                        contains: search,
+                        mode: "insensitive",
+                    },
+                },
+                {
+                    genre: {
+                        contains: search,
+                        mode: "insensitive",
+                    },
+                },
+                {
+                    developer: {
+                        contains: search,
+                        mode: "insensitive",
+                    },
+                },
+                {
+                    console: {
+                        is: {
+                            name: {
+                                contains: search,
+                                mode: "insensitive",
+                            },
+                        },
+                    },
+                },
             ],
         }
-        : {}
+        : {};
 
     const [games, total, consoles] = await Promise.all([
         prisma.game.findMany({
