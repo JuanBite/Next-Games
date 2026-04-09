@@ -15,9 +15,18 @@ const prisma = new PrismaClient({
 
 const PER_PAGE = 12
 
-export default async function ConsolesInfo({ searchParams }) {
-    const { q, page } = await searchParams
-    const search = q || ''
+export default async function ConsolesInfo({
+    searchParams,
+}: {
+    searchParams?: {
+        q?: string;
+        page?: string;
+    };
+}) {
+    const q = searchParams?.q ?? ""
+    const page = searchParams?.page ?? "1"
+
+    const search = q
     const currentPage = Number(page) || 1
 
     const where = search
@@ -72,7 +81,7 @@ export default async function ConsolesInfo({ searchParams }) {
                         <div className="absolute inset-0 bg-black/30 group-hover:bg-black/60 transition-all duration-500" />
 
                         {/* Acciones */}
-                        
+
 
                         {/* Badge */}
                         <div className="absolute top-2 left-2 bg-black/70 text-white text-xs px-3 py-1 rounded-full">
@@ -95,12 +104,12 @@ export default async function ConsolesInfo({ searchParams }) {
                                 {console.description}
                             </p>
                             <div className="flex gap-2 mt-2 justify-between">
-                            <EditConsoleButton consoleRecord={console} />
-                            <DeleteConsoleButton 
-                                consoleId={console.id} 
-                                consoleName={console.name} 
-                            />
-                        </div>
+                                <EditConsoleButton consoleRecord={console} />
+                                <DeleteConsoleButton
+                                    consoleId={console.id}
+                                    consoleName={console.name}
+                                />
+                            </div>
                         </div>
                     </div>
                 ))}
