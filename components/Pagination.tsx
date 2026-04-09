@@ -2,7 +2,13 @@
 
 import { useRouter, useSearchParams } from 'next/navigation'
 
-export default function Pagination({ currentPage, totalPages }: { currentPage: number, totalPages: number }) {
+export default function Pagination({
+    currentPage,
+    totalPages,
+}: {
+    currentPage: number
+    totalPages: number
+}) {
     const router = useRouter()
     const searchParams = useSearchParams()
 
@@ -10,7 +16,6 @@ export default function Pagination({ currentPage, totalPages }: { currentPage: n
         const params = new URLSearchParams(searchParams.toString())
         params.set('page', String(page))
         router.push(`?${params.toString()}`)
-        router.refresh()
     }
 
     if (totalPages <= 1) return null
