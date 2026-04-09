@@ -38,8 +38,7 @@ export default function CreateGameModal({ consoles }: Props) {
       <button
         onClick={() => modalRef.current?.showModal()}
         className="fixed bottom-6 right-6 z-50 bg-purple-600 hover:bg-purple-700 text-white w-14 h-14 flex items-center justify-center rounded-full shadow-lg transition"
-      >
-        <PlusIcon size={28} />
+      > +
       </button>
 
       <dialog ref={modalRef} className="modal modal-bottom sm:modal-middle">
