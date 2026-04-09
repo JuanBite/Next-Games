@@ -15,11 +15,20 @@ const prisma = new PrismaClient({
 
 const PER_PAGE = 12
 
-export default async function GamesInfo({ searchParams }) {
-    const { q, page } = await searchParams
+export default async function GamesInfo({
+    searchParams,
+}: {
+    searchParams?: {
+        q?: string;
+        page?: string;
+    };
+}) {
+    const q = searchParams?.q ?? ""
+    const page = searchParams?.page ?? "1"
 
-    const search = q || ''
+    const search = q
     const currentPage = Number(page) || 1
+
     const skip = (currentPage - 1) * PER_PAGE
 
     // 🔎 filtro por precio
