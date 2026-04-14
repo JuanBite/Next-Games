@@ -293,7 +293,7 @@ export async function deleteConsole(
 
         // ✅ "no-image.png" es el default de Consoles
         if (consoleRecord.image && consoleRecord.image !== "no-image.png") {
-            const imagePath = path.join(process.cwd(), "public", "imgs", consoleRecord.image);
+            const imagePath = path.join(process.cwd(), "public", "img", consoleRecord.image);
             try {
                 await unlink(imagePath);
             } catch (err: unknown) {

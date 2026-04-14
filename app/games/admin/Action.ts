@@ -322,7 +322,7 @@ export async function deleteGame(
 
         // ✅ FIX: "no-cover.png" en vez de "no-cover.jpg" (coincide con el schema)
         if (game.cover && game.cover !== "no-cover.png") {
-            const imagePath = path.join(process.cwd(), "public", "imgs", game.cover);
+            const imagePath = path.join(process.cwd(), "public", "img", game.cover);
             try {
                 await unlink(imagePath);
             } catch (err: unknown) {
