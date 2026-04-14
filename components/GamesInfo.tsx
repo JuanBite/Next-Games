@@ -22,8 +22,8 @@ interface SearchParams {
     console_id?: string
 }
 
-export default async function GamesInfo({ searchParams }: { searchParams: Promise<SearchParams> }) {
-    const { q, page, console_id } = await searchParams
+export default async function GamesInfo({ searchParams }: { searchParams?: SearchParams }) {
+    const { q, page, console_id } = searchParams ?? {}
 
     const search = q || ''
     const currentPage = Number(page) || 1
