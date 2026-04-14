@@ -3,10 +3,12 @@
 import { useActionState, useEffect, useRef } from "react";
 import { createConsole, ConsoleActionState } from "@/app/consoles/admin/Action";
 import PlusIcon from "@/components/icons/PlusIcon";
+import { useToast } from "@/components/ToastProvider";
 
 const initialState: ConsoleActionState = { success: false };
 
 export default function CreateConsoleModal() {
+    const { showToast } = useToast();
     const modalRef = useRef<HTMLDialogElement>(null);
     const formRef = useRef<HTMLFormElement>(null);
 
@@ -15,6 +17,7 @@ export default function CreateConsoleModal() {
     // Cierra y resetea el form cuando el create es exitoso
     useEffect(() => {
         if (state.success) {
+            showToast("Console created successfully! 🕹️");
             modalRef.current?.close();
             formRef.current?.reset();
         }
@@ -27,7 +30,7 @@ export default function CreateConsoleModal() {
                 onClick={() => modalRef.current?.showModal()}
                 className="fixed bottom-6 right-6 z-50 bg-purple-600 hover:bg-purple-700 text-white w-14 h-14 flex items-center justify-center rounded-full shadow-lg transition"
             >
-                +
+                <PlusIcon size={28} />
             </button>
 
             <dialog ref={modalRef} className="modal modal-bottom sm:modal-middle">

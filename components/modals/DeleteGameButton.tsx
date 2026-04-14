@@ -3,6 +3,8 @@
 import { useRef, useState } from "react";
 import TrashIcon from "@/components/icons/TrashIcon";
 import { deleteGame } from "@/app/games/admin/Action";
+import { useToast } from "@/components/ToastProvider";
+
 
 interface Props {
   gameId: number;
@@ -10,6 +12,7 @@ interface Props {
 }
 
 export default function DeleteGameButton({ gameId, gameTitle }: Props) {
+  const { showToast } = useToast();
   const modalRef = useRef<HTMLDialogElement>(null);
   const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -25,6 +28,7 @@ export default function DeleteGameButton({ gameId, gameTitle }: Props) {
       setIsPending(false);
     } else {
       modalRef.current?.close();
+      showToast("Game deleted successfully! 🎮");
     }
   };
 

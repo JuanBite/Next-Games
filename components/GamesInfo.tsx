@@ -1,4 +1,4 @@
-import { PrismaClient, Prisma } from '../src/generated/prisma'
+import { PrismaClient } from '../src/generated/prisma'
 import { PrismaNeon } from '@prisma/adapter-neon'
 import SearchInput from '@/components/SearchInput'
 import Pagination from '@/components/Pagination'
@@ -6,6 +6,7 @@ import Pagination from '@/components/Pagination'
 import CreateGameModal from "@/components/modals/CreateGameModal"
 import EditGameButton from "@/components/modals/EditGameButton"
 import DeleteGameButton from "@/components/modals/DeleteGameButton"
+import ConsoleFilter from "@/components/modals/ConsoleFilter"
 
 const prisma = new PrismaClient({
     adapter: new PrismaNeon({
@@ -15,20 +16,11 @@ const prisma = new PrismaClient({
 
 const PER_PAGE = 12
 
-export default async function GamesInfo({
-    searchParams,
-}: {
-    searchParams?: {
-        q?: string;
-        page?: string;
-    };
-}) {
-    const q = searchParams?.q ?? ""
-    const page = searchParams?.page ?? "1"
+export default async function GamesInfo({ searchParams }) {
+    const { q, page, console_id } = await searchParams
 
-    const search = q
+    const search = q || ''
     const currentPage = Number(page) || 1
-
     const skip = (currentPage - 1) * PER_PAGE
 
     // 🔎 filtro por precio
@@ -36,46 +28,29 @@ export default async function GamesInfo({
         !isNaN(Number(search)) && search !== ''
             ? { price: { equals: Number(search) } }
             : {}
+    const consoleFilter = console_id
+        ? { console_id: Number(console_id) }
+        : {}
 
-    const where: Prisma.GameWhereInput = search
-        ? {
-            OR: [
-                {
-                    price: {
-                        equals: Number(search),
+    const where = {
+        AND: [
+            ...(search
+                ? [
+                    {
+                        OR: [
+                            { title: { contains: search, mode: 'insensitive' } },
+                            { genre: { contains: search, mode: 'insensitive' } },
+                            { developer: { contains: search, mode: 'insensitive' } },
+                            { console: { name: { contains: search, mode: 'insensitive' } } },
+                            ...(priceFilter.price ? [priceFilter] : []),
+                        ],
                     },
-                },
-                {
-                    title: {
-                        contains: search,
-                        mode: "insensitive",
-                    },
-                },
-                {
-                    genre: {
-                        contains: search,
-                        mode: "insensitive",
-                    },
-                },
-                {
-                    developer: {
-                        contains: search,
-                        mode: "insensitive",
-                    },
-                },
-                {
-                    console: {
-                        is: {
-                            name: {
-                                contains: search,
-                                mode: "insensitive",
-                            },
-                        },
-                    },
-                },
-            ],
-        }
-        : {};
+                ]
+                : []),
+
+            ...(console_id ? [{ console_id: Number(console_id) }] : []),
+        ],
+    }
 
     const [games, total, consoles] = await Promise.all([
         prisma.game.findMany({
@@ -99,6 +74,7 @@ export default async function GamesInfo({
                 <div className="flex items-center gap-4">
                     <h1 className="text-2xl font-bold text-white">Games</h1>
                     <SearchInput />
+                    <ConsoleFilter consoles={consoles} />
                 </div>
 
                 <CreateGameModal consoles={consoles} />
@@ -162,6 +138,8 @@ export default async function GamesInfo({
             <Pagination
                 currentPage={currentPage}
                 totalPages={totalPages}
+                totalItems={total}
+                itemsPerPage={PER_PAGE}
             />
         </div>
     )

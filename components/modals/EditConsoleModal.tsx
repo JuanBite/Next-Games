@@ -2,6 +2,8 @@
 
 import { useActionState, useEffect, useRef } from "react";
 import { updateConsole, ConsoleActionState } from "@/app/consoles/admin/Action";
+import { useToast } from "@/components/ToastProvider";
+
 
 interface ConsoleRecord {
     id: number;
@@ -21,6 +23,7 @@ interface Props {
 const initialState: ConsoleActionState = { success: false };
 
 export default function EditConsoleModal({ consoleRecord, isOpen, onClose }: Props) {
+    const { showToast } = useToast();
     const modalRef = useRef<HTMLDialogElement>(null);
     const formRef  = useRef<HTMLFormElement>(null);
 
@@ -36,6 +39,7 @@ export default function EditConsoleModal({ consoleRecord, isOpen, onClose }: Pro
 
     useEffect(() => {
         if (state.success) {
+                showToast("Console updated successfully! 🕹️");
             onClose();
         }
     }, [state.success]);

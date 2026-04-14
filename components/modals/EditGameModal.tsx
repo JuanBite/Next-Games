@@ -2,6 +2,7 @@
 
 import { useActionState, useEffect, useRef } from "react";
 import { updateGame, ActionState } from "@/app/games/admin/Action";
+import { useToast } from "@/components/ToastProvider";
 
 interface Console {
     id: number;
@@ -30,6 +31,7 @@ interface Props {
 const initialState: ActionState = { success: false };
 
 export default function EditGameModal({ game, consoles, isOpen, onClose }: Props) {
+    const { showToast } = useToast();
     const modalRef = useRef<HTMLDialogElement>(null);
     const formRef  = useRef<HTMLFormElement>(null);
 
@@ -47,6 +49,7 @@ export default function EditGameModal({ game, consoles, isOpen, onClose }: Props
     // Cierra cuando el update es exitoso
     useEffect(() => {
         if (state.success) {
+            showToast("Console updated successfully! 🕹️");
             onClose();
         }
     }, [state.success]);

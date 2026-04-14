@@ -3,6 +3,8 @@
 import { useRef, useState } from "react";
 import TrashIcon from "@/components/icons/TrashIcon";
 import { deleteConsole } from "@/app/consoles/admin/Action";
+import { useToast } from "@/components/ToastProvider";
+
 
 interface Props {
     consoleId: number;
@@ -10,6 +12,7 @@ interface Props {
 }
 
 export default function DeleteConsoleButton({ consoleId, consoleName }: Props) {
+    const { showToast } = useToast();
     const modalRef = useRef<HTMLDialogElement>(null);
     const [isPending, setIsPending] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -25,6 +28,8 @@ export default function DeleteConsoleButton({ consoleId, consoleName }: Props) {
             setIsPending(false);
         } else {
             modalRef.current?.close();
+            showToast("Console deleted successfully! 🕹️");
+
         }
     };
 
