@@ -110,6 +110,15 @@ export default async function GamesInfo({ searchParams }: { searchParams?: Searc
                     </div>
                 ))}
             </div>
+            {games.length === 0 && (
+                <div className="flex flex-col items-center justify-center mt-20 gap-3 text-gray-400">
+                    <span className="text-5xl">🔍</span>
+                    <p className="text-lg font-medium">No games found</p>
+                    <p className="text-sm">
+                        Try a different search or console filter
+                    </p>
+                </div>
+            )}
 
             <Pagination
                 currentPage={currentPage}
