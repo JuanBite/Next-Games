@@ -92,7 +92,7 @@ export default function CreateGameModal({ consoles }: Props) {
                 type="text"
                 placeholder="e.g. Naughty Dog"
                 defaultValue={state.oldValues?.developer}
-                className={`input input-bordered w-full border-purple-400 ${state.errors?.developer ? "input-error" : ""}`}
+                className={`input input-bordered w-full border-purple-400 focus:outline-none${state.errors?.developer ? "input-error" : ""}`}
               />
               {state.errors?.developer && (
                 <label className="label">
@@ -114,7 +114,7 @@ export default function CreateGameModal({ consoles }: Props) {
                   type="text"
                   placeholder="e.g. Action"
                   defaultValue={state.oldValues?.genre}
-                  className={`input input-bordered w-full border-purple-400 ${state.errors?.genre ? "input-error" : ""}`}
+                  className={`input input-bordered w-full border-purple-400 focus:outline-none ${state.errors?.genre ? "input-error" : ""}`}
                 />
                 {state.errors?.genre && (
                   <label className="label">
@@ -137,7 +137,7 @@ export default function CreateGameModal({ consoles }: Props) {
                   max="999.99"
                   placeholder="59.99"
                   defaultValue={state.oldValues?.price}
-                  className={`input input-bordered w-full border-purple-400 ${state.errors?.price ? "input-error" : ""}`}
+                  className={`input input-bordered w-full border-purple-400 focus:outline-none${state.errors?.price ? "input-error" : ""}`}
                 />
                 {state.errors?.price && (
                   <label className="label">
@@ -158,7 +158,7 @@ export default function CreateGameModal({ consoles }: Props) {
                 <select
                   name="console_id"
                   defaultValue={state.oldValues?.console_id ?? ""}
-                  className={`select select-bordered w-full border-purple-400 ${state.errors?.console_id ? "select-error" : ""}`}
+                  className={`select select-bordered w-full border-purple-400 focus:outline-none${state.errors?.console_id ? "select-error" : ""}`}
                 >
                   <option value="" disabled>
                     Select a console
@@ -186,7 +186,7 @@ export default function CreateGameModal({ consoles }: Props) {
                   name="releasedate"
                   type="date"
                   defaultValue={state.oldValues?.releasedate}
-                  className={`input input-bordered w-full border-purple-400 ${state.errors?.releasedate ? "input-error" : ""}`}
+                  className={`input input-bordered w-full border-purple-400 focus:outline-none${state.errors?.releasedate ? "input-error" : ""}`}
                 />
                 {state.errors?.releasedate && (
                   <label className="label">
@@ -207,7 +207,7 @@ export default function CreateGameModal({ consoles }: Props) {
                 name="cover"
                 type="file"
                 accept="image/jpeg,image/png,image/webp"
-                className={`file-input file-input-bordered bg-purple-600 hover:bg-purple-700 w-full  ${state.errors?.cover ? "file-input-error" : ""}`}
+                className={`file-input file-input-bordered bg-purple-600 hover:bg-purple-700 w-full focus:outline-none ${state.errors?.cover ? "file-input-error" : ""}`}
               />
               {state.errors?.cover && (
                 <label className="label">
@@ -232,7 +232,7 @@ export default function CreateGameModal({ consoles }: Props) {
                 maxLength={500}
                 placeholder="Short description of the game..."
                 defaultValue={state.oldValues?.description}
-                className={`textarea textarea-bordered w-full resize-none border-purple-400 ${state.errors?.description ? "textarea-error" : ""}`}
+                className={`textarea textarea-bordered w-full resize-none border-purple-400 focus:outline-none${state.errors?.description ? "textarea-error" : ""}`}
               />
               {state.errors?.description && (
                 <label className="label">

@@ -29,7 +29,7 @@ export default function ConsoleFilter({ consoles }: { consoles: Console[] }) {
         <div className="flex flex-wrap gap-2">
             <button
                 onClick={() => handleClick("")}
-                className={`btn btn-sm rounded-full ${activeConsoleId === "" ? "btn-primary" : "btn-outline"}`}
+                className={`btn btn-sm rounded-full ${activeConsoleId === "" ? "bg-purple-700" : "btn-outline"}`}
             >
                 All
             </button>
@@ -37,7 +37,7 @@ export default function ConsoleFilter({ consoles }: { consoles: Console[] }) {
                 <button
                     key={c.id}
                     onClick={() => handleClick(String(c.id))}
-                    className={`btn btn-sm rounded-full ${activeConsoleId === String(c.id) ? "btn-primary" : "btn-outline"}`}
+                    className={`btn btn-sm rounded-full ${activeConsoleId === String(c.id) ? "bg-purple-700" : "btn-outline"}`}
                 >
                     {c.name}
                 </button>
