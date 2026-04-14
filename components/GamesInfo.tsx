@@ -114,8 +114,6 @@ export default async function GamesInfo({ searchParams }: { searchParams?: Searc
             <Pagination
                 currentPage={currentPage}
                 totalPages={totalPages}
-                totalItems={total}
-                itemsPerPage={PER_PAGE}
             />
         </div>
     )
