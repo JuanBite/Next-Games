@@ -10,15 +10,15 @@ interface Console {
 export default function ConsoleFilter({ consoles }: { consoles: Console[] }) {
     const router = useRouter();
     const searchParams = useSearchParams();
-    const activeConsoleId = searchParams.get("consoleId") ?? "";
+    const activeConsoleId = searchParams.get("console_id") ?? "";
 
     function handleClick(id: string) {
         const params = new URLSearchParams(searchParams.toString());
 
         if (activeConsoleId === id) {
-            params.delete("consoleId"); // si clickeas el mismo, deselecciona
+            params.delete("console_id");
         } else {
-            params.set("consoleId", id);
+            params.set("console_id", id);
         }
 
         params.set("page", "1");
